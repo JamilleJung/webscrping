@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Deposit {
+  id              Int      @id @default(autoincrement())
+  order           String   @unique
+  bankUser        String
+  username        String
+  beforeDeposit   Float
+  deposit         Float
+  remainingBalance Float
+  transactionTime DateTime
+  slipTime        DateTime
+  bankDeposit     String
+  madeBy          String
+  status          String
+  details         String?
+  aff             String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([username])
+  @@index([bankUser])
+  @@index([transactionTime])
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  username      String   @unique
+  phone         String?
+  password      String?
+  fullName      String?
+  accountNumber String?
+  bank          String?
+  referrer      String?
+  credit        Float    @default(0)
+  points        Int      @default(0)
+  spins         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([phone])
+  @@index([referrer])
+  @@index([username])
+}
